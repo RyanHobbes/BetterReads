@@ -8,6 +8,7 @@ body {
 }
 h2{
   text-align: center;
+  align-items: center;
 }
 
 
@@ -141,7 +142,7 @@ button:hover {
 
 
 /* Review Section */
-#reviews {
+#reviews, .previous-reviews {
   background-color: white;
   padding: 20px;
   margin: 20px auto;
@@ -175,6 +176,24 @@ button {
 
 button:hover {
   background-color: #4a0072;
+}
+#previous-reviews {
+  text-align: center; /* Centers text */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers items horizontally */
+  justify-content: center; /* Centers content vertically */
+  margin: 20px auto; /* Centers the section */
+  width: 80%; /* Adjust width */
+}
+
+.review-box {
+  border: 2px solid #ccc;
+  padding: 15px;
+  width: 50%; /* Adjust width */
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  text-align: center;
 }
 
 /* Book Lists */
