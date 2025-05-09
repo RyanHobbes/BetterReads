@@ -1,0 +1,251 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+h2{
+  text-align: center;
+  align-items: center;
+}
+
+
+/* Header */
+header {
+  background-color: #6a0dad;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 1.5em;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Reading Stats - Horizontal Layout */
+#reading-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; /* Reduce space between stats */
+  margin-top: 10px;
+  font-size: 1em;
+}
+
+/* Individual Stat Blocks */
+.stat {
+  color: rgb(255, 255, 255); /* Change text color to black */
+  padding: 5px; /* Reduce padding */
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Update Button */
+#update-reading {
+  background-color: #ffcc00;
+  color: black;
+  padding: 6px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  margin-left: 15px; /* Adjust spacing */
+}
+
+#update-reading:hover {
+  background-color: #e6b800;
+}
+
+
+
+/* Carousel Container */
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+/* Carousel */
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 15px;
+  padding: 10px;
+  white-space: nowrap;
+  width: 80%;
+  scrollbar-width: none; /* Hide scrollbar */
+}
+
+/* Hide scrollbar for Webkit browsers */
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Book Items */
+.book {
+  min-width: 150px;
+  height: 220px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.book:hover {
+  transform: scale(1.1);
+}
+
+/* Book Images */
+.book img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Scroll Buttons */
+button {
+  background-color: #6a0dad;
+  color: white;
+  font-size: 24px;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #4a0072;
+}
+
+/* Star Rating */
+.star-rating {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.star {
+  color: gray; /* Default star color */
+  transition: color 0.3s ease-in-out;
+}
+
+.star:hover,
+.star.active {
+  color: gold; /* Highlight selected stars */
+}
+
+
+/* Review Section */
+#reviews, .previous-reviews {
+  background-color: white;
+  padding: 20px;
+  margin: 20px auto;
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #6a0dad;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #4a0072;
+}
+#previous-reviews {
+  text-align: center; /* Centers text */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers items horizontally */
+  justify-content: center; /* Centers content vertically */
+  margin: 20px auto; /* Centers the section */
+  width: 80%; /* Adjust width */
+}
+
+.review-box {
+  border: 2px solid #ccc;
+  padding: 15px;
+  width: 50%; /* Adjust width */
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Book Lists */
+#book-lists {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.read-list {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  width: 45%;
+}
+
+.unread-list{
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  width: 45%;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Friends List */
+#friends-list {
+  background-color: white;
+  padding: 20px;
+  margin: 20px auto;
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+footer {
+  background-color: #6a0dad;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
