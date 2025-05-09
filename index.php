@@ -11,18 +11,29 @@
     <h1>Welcome to Your BetterReads 📚</h1>
     <p>Discover, review, and share your favorite books with friends!</p>
     
-    <!-- Reading Stats -->
-    <div id="reading-stats">
-        <div class="stat">
-            <p>Books Read This Year: <span id="books-read">0</span></p>
-        </div>
-        <div class="stat">
-            <p>Hours Spent Reading: <span id="hours-read">0</span></p>
-        </div>
-        <button id="update-reading">Update Progress</button>
+<!-- Reading Stats -->
+<div id="reading-stats">
+    <div class="stat">
+        <p>
+            Books Read This Year: <span id="books-read">0</span>
+            <button class="add-btn" onclick="incrementStat('books-read')">➕</button>
+        </p>
     </div>
-</header>
-
+    <div class="stat">
+        <p>
+            Hours Spent Reading: <span id="hours-read">0</span>
+            <button class="add-btn" onclick="incrementStat('hours-read')">➕</button>
+        </p>
+    </div>
+    <button id="update-reading">Update Progress</button>
+</div>
+<script>
+function incrementStat(id) {
+    const el = document.getElementById(id);
+    let currentValue = parseInt(el.textContent);
+    el.textContent = currentValue + 1;
+}
+</script>
         
     </header>
     <section id="book-carousel">
