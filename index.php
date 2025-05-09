@@ -91,6 +91,24 @@
     </form>
 </section>
 
+<!-- Previous Reviews Section -->
+ <div class = "previous-reviews">
+<section id="previous-reviews">
+    <h2>Previous Reviews</h2>
+    <label for="review-select">Select a Review:</label>
+    <select id="review-select">
+        <option value="review-select">-- Choose a review --</option>
+        <option value="review1">Review for "Example Book 1"</option>
+        <option value="review2">Review for "Example Book 2"</option>
+    </select>
+
+    <div id="review-display" class="review-box">
+        <p><strong>Selected Review:</strong></p>
+        <p id="review-content">No review selected.</p>
+    </div>
+</section>
+</div>
+
     <footer>
         <p>&copy; 2025 BetterReads. All rights reserved.</p>
     </footer>
