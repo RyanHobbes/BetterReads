@@ -18,4 +18,12 @@ try {
     echo "Connection failed: ".$e->getMessage();
 }
 
+function getBooksByAuthor($pdo, $authorName){
+    $stmt = $pdo->prepare("CALL GetBooksByAuthor(:author)");
+    $stmt ->bindParam(':author', $authorName, PDO::PARAM_STR);
+    $stmt -> execute();
+    $results = $stmt->fetchALL(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $results;
+}
 ?>
