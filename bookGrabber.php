@@ -1,5 +1,24 @@
 <?php
+function getpdo() {
+    $databasePrefix = "cs366-2251_callahank18";
+    $netID = "callahank18";
+    $hostName = "washington.uww.edu";
+    $password = "kc8958";
 
+    // Construct Data Source Name
+    $dsn = "mysql:host=$hostName;dbname=$databasePrefix";
+
+    try {
+        // Establish a connection
+        $pdo = new PDO($dsn, $netID, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        echo "Successfully connected to the database<br>";
+        return $pdo;
+    } catch (PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
+        return null;
+    }
+}
 function connectToDatabase(){
 $databasePrefix = "cs366-2251_callahank18";
 $netID = "callahank18";
@@ -33,6 +52,7 @@ try {
     echo "Connection failed: ".$e->getMessage();
 }
 }
+
 
 function getBooksByAuthor($pdo, $authorName){
     $stmt = $pdo->prepare("CALL GetBooksByAuthor(:author)");
