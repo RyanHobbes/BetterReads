@@ -11,7 +11,7 @@ DELIMITER;
 
 -- 2. Creates a stored procedure to get the books read by a user, identified by the user ID.
 DELIMITER $$
-CREATE PROCEDURE GetBooksReadByUser (IN uid INT)
+CREATE PROCEDURE GetBooksReadByUser (IN uid VARCHAR(40))
 BEGIN
       SELECT b.title, h.DateRead
       FROM HasRead h

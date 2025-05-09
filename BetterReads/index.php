@@ -11,6 +11,19 @@ if (($file = fopen($file_path, 'r')) !== false) {
     die("Error: Could not open $file_path");
 }
 ?>
+<script>
+  window.onload = function() {
+    fetch('sqlConnector.php')
+    .then (response => response.text())
+    .then(data => {
+      document.getElementById('result').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  };
+  
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -8,8 +8,14 @@ outputCSV2 = r"C:\Users\amesr\Documents\GitHub\BetterReads\first_10000_rating.cs
 
 
 # Function to sample every 50th row up to 10,000 entries
-def sample_every_3(filepath, output_path):
+def sample_every_3(filepath, output_path, drop_price=False):
     df = pd.read_csv(filepath)
+    if drop_price and 'Price' in df.columns:
+            df = df.drop(columns=['Price'])
+    if 'description' in df.columns:
+            df['description'] = df['description'].apply(
+            lambda x: "Description not available" if pd.isna(x) or str(x).strip() == '' else x
+            )
     sampled = df.iloc[::3].head(10000)
     sampled.to_csv(output_path, index=False)
     print(f"Saved {len(sampled)} sampled rows to '{output_path}'")
