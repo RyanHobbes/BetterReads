@@ -287,6 +287,76 @@ function ofUserRatingsAbove($pdo){
     $stmt->closeCursor();
     return $results;
 }
+function addHours($pdo) {
+    $stmt = $pdo->prepare("CALL AddBooks(:amount)");
+    $amount = 1;
+    $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
+    $stmt->execute();
+    $stmt->closeCursor();
+}
+function subHours($pdo) {
+    $stmt = $pdo->prepare("CALL AddHours(:amount)");
+    $amount = -1;
+    $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
+    $stmt->execute();
+    $stmt->closeCursor();
+}
+function addBooks($pdo) {
+    $stmt = $pdo->prepare("CALL AddBooks(:amount)");
+    $amount = 1;
+    $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
+    $stmt->execute();
+    $stmt->closeCursor();
+}
+
+function subBooks($pdo) {
+    $stmt = $pdo->prepare("CALL AddBooks(:amount)");
+    $amount = -1;
+    $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
+    $stmt->execute();
+    $stmt->closeCursor();
+}
+
+function addBookToReadList($pdo, $title){
+        $userID = "USER12345";
+    $stmt = $pdo->prepare("CALL addToReadList(:userID, :title)");
+    $stmt->bindParam(':userID', PDO::PARAM_STR);
+    $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        echo "Book added to the read list successfully.";
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+        $stmt->closeCursor();
+}
+function addBookToWillReadList($pdo, $title){
+    $userID = "USER12345";
+    $stmt = $pdo->prepare("CALL addToReadList(:userID, :title)");
+    $stmt->bindParam(':userID', PDO::PARAM_STR);
+    $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        echo "Book added to the read list successfully.";
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+        $stmt->closeCursor();
+}
+function getBookImagesByCategory($pdo, $category) {
+    // Prepare the SQL query to select the category and randomize the results
+    $stmt = $pdo->prepare("CALL getBookImageByCategory(:category)");
+    $stmt->bindParam(':category', $category, PDO::PARAM_STR);
+    $stmt->execute();
+    
+    // Fetch all books in the category
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $stmt->closeCursor();
+    return $results;
+}
 
 
 ?>
