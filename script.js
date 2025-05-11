@@ -70,3 +70,37 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error fetching books:", error));
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const carousel = document.getElementById("carousel-content");
+    const readList = document.getElementById("read-list");
+    const toReadList = document.getElementById("want-to-read-list");
+
+    // Fetch books from database
+    fetch("fetch_books.php")
+        .then(response => response.json())
+        .then(books => {
+            books.forEach(book => {
+                // Create book element for carousel
+                const bookDiv = document.createElement("div");
+                bookDiv.classList.add("book");
+                bookDiv.innerHTML = `
+                    <a href="${book.link}" target="_blank">
+                        <img src="${book.image}" alt="${book.title}">
+                    </a>
+                    <p>${book.title}</p>
+                `;
+                carousel.appendChild(bookDiv);
+
+                // Add book to Read List
+                const readItem = document.createElement("li");
+                readItem.innerHTML = `<img src="${book.image}" alt="${book.title}"> ${book.title}`;
+                readList.appendChild(readItem);
+
+                // Add book to To-Be-Read List
+                const toReadItem = document.createElement("li");
+                toReadItem.innerHTML = `<img src="${book.image}" alt="${book.title}"> ${book.title}`;
+                toReadList.appendChild(toReadItem);
+            });
+        })
+        .catch(error => console.error("Error fetching books:", error));
+});

@@ -357,56 +357,6 @@ function getBookImagesByCategory($pdo, $category) {
     $stmt->closeCursor();
     return $results;
 }
-function getUserBooksReadImages($pdo) {
-    try {
-        $stmt = $pdo->prepare("CALL getUserBooksReadImages()");
-        $stmt->execute();
-        $images = $stmt->fetchAll(PDO::FETCH_COLUMN); // fetches just the 'Image' values
-        $stmt->closeCursor();
-        return $images;
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-        return [];
-    }
-}
-function getUserBooksWillReadImages($pdo) {
-    try {
-        $stmt = $pdo->prepare("CALL getUserBooksWillReadImages()");
-        $stmt->execute();
-        $images = $stmt->fetchAll(PDO::FETCH_COLUMN); // fetches just the 'Image' values
-        $stmt->closeCursor();
-        return $images;
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-        return [];
-    }
-}
-/*
-Example of how to use Leavebookreview
-
-// Example data
-$title = "Dr. Seuss: American Icon";
-$userId = "A2MVUWT453QH61";
-$score = 4.0;
-$text = "Great book on the legacy of Dr. Seuss! Thorough and informative.";
-
-leaveBookReview($pdo, $title, $userId, $score, $text);
-*/
-function leaveBookReview($pdo, $title, $score, $text) {
-    try {
-        $stmt = $pdo->prepare("CALL addBookReview(:title, :score, :text)");
-        $stmt->bindParam(':title', $title, PDO::PARAM_STR);
-        $stmt->bindParam(':score', $score);
-        $stmt->bindParam(':text', $text, PDO::PARAM_STR);
-        $stmt->execute();
-        $stmt->closeCursor();
-        return true;
-    } catch (PDOException $e) {
-        echo "Error adding review: " . $e->getMessage();
-        return false;
-    }
-}
-
 
 
 ?>
