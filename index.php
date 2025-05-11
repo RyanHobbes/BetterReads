@@ -61,18 +61,12 @@ function incrementStat(id) {
         
         <br>
         <div class="to-be-read-list">
-            <div class="read-list">
-        <h3>Your Want To Read List:</h3>
-        <form method="POST">
-        <input type="text" name="title" placeholder="Enter book title" required>
-        <button type="submit">Add Book</button>
-        </form>
-    <?php 
-    $pdo = getpdo();
-    $results = $pdo ? getUserBooksReadImages($pdo): [];
-            echo($results);
-            echo 'Result count: ' . count($results);
-    ?>
+            <h3>Books You've Read</h3>
+            <ul id="read-list">
+                <li>Example Book 1</li>
+                <li>Example Book 2</li>
+                <!-- More books will be dynamically loaded -->
+            </ul>
         </div>
 
         <div class="read-list">
