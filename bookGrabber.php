@@ -197,25 +197,37 @@ function getAllReviews($pdo){
     return $results;
 }
 /**
- * Retrieves all books from the Book table.
+ * Retrieves all books from the Book table. This function call will crash the server. Database too large
  * 
  * This function calls the stored procedure `GetAllBooks()` to fetch all book records from the Book table.
  * It doesn't take any input parameters.
- */
-function getAllBooks($pdo){
-    $stmt = $pdo->prepare("CALL GetAllBooks()");
-    $stmt->execute();
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $stmt->closeCursor();
-    return $results;
-}
+ 
+*function getAllBooks($pdo){
+*    $stmt = $pdo->prepare("CALL GetAllBooks()");
+*    $stmt->execute();
+*    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+*    $stmt->closeCursor();
+*    return $results;
+*}
+    */
 /**
  * Retrieves books by their category.
  * 
  * This function calls the stored procedure `GetBooksByCategory()` and passes a category name to it. It retrieves the titles of books belonging to that category.
  */
+
+ function getBooksPaginated($pdo, $limit = 100, $offset = 0) {
+    $stmt = $pdo->prepare("SELECT * FROM books LIMIT :limit OFFSET :offset");
+    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $results;
+}
+
 function getBooksByCategory($pdo, $category){
-    $stmt = $pdo->prepare("CALL GetBooksByCategory(:category)");
+    $stmt = $pdo->prepare("CALL getBooksByCategory(:category)");
     $stmt->bindParam(':category', $category, PDO::PARAM_STR);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
