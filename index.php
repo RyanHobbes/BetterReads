@@ -19,26 +19,29 @@ $pdo = getpdo();
 <!-- Reading Stats -->
 <div id="reading-stats">
     <div class="stat">
-        <p>
-            Books Read This Year: <span id="books-read">0</span>
-            <button class="add-btn" onclick="incrementStat('books-read')">➕</button>
-        </p>
-    </div>
-    <div class="stat">
-        <p>
-            Hours Spent Reading: <span id="hours-read">0</span>
-            <button class="add-btn" onclick="incrementStat('hours-read')">➕</button>
-        </p>
-    </div>
-    <button id="update-reading">Update Progress</button>
-</div>
-<script>
-function incrementStat(id) {
-    const el = document.getElementById(id);
-    let currentValue = parseInt(el.textContent);
-    el.textContent = currentValue + 1;
+
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'incrementHours') {
+    addHours($pdo);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
-</script>
+
+    ?>
+
+
+<form method="POST">
+    <?php
+            $hoursReading = getHours($pdo);
+            ?>
+            Hours Read This Year: <span id="hours-read"><?php echo $hoursReading[0]['HoursRead'];?> </span>
+    <input type="hidden" name="action" value="incrementHours">
+    <button type="submit">➕</button>
+</form>
+
+    </div>
+</div>
+
         
     </header>
     <section id="book-carousel">
@@ -66,7 +69,7 @@ function incrementStat(id) {
 
 <h2>Your Book Lists</h2>
     <section id="book-lists">
-        
+
         <br>
         <div class="to-be-read-list">
             <h3>Books You've Read</h3>
@@ -83,12 +86,10 @@ function incrementStat(id) {
             </ul>
         </div>
         <?php
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addBook'])) {
           $title = trim($_POST['title']);
           if (!empty($title) && $pdo) {
               addBookToWillReadList($pdo, $title);
-
-              
            }
         }
         ?>
@@ -98,11 +99,11 @@ function incrementStat(id) {
         <h3>Your Read List:</h3>
         <form method="POST">
         <input type="text" name="title" placeholder="Enter book title" required>
-        <button type="submit">Add Book</button>
+        <button type="submit"name = "addBook">Add Book</button>
         </form>
 
           <?php
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['removeBook'])) {
           $title = trim($_POST['title']);
           if (!empty($title) && $pdo) {
               removeBookFromWillReadList($pdo, $title);
@@ -113,9 +114,11 @@ function incrementStat(id) {
 
         <form method="POST">
         <input type="text" name="title" placeholder="Enter book title" required>
-        <button type="submit">Remove Book</button>
+        <button type="submit" name="removeBook">Remove Book</button>
         </form>
-
+    <?php 
+    $results = $pdo ? getUserBooksReadImages($pdo): [];
+    ?>
         </div>
     </section>
 
@@ -130,24 +133,56 @@ function incrementStat(id) {
         </ul>
     </section>
 
-    <section id="reviews">
+   <?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'submitReview') {
+    $title = trim($_POST['title']);
+    $text = trim($_POST['text']);
+    $score = intval($_POST['score']); // Make sure it's an integer
+
+    if (!empty($title) && !empty($text) && $score > 0) {
+        leaveBookReview($pdo, $title, $score, $text);
+        header("Location: " . $_SERVER['PHP_SELF']); // Refresh to clear POST
+        exit();
+    } else {
+        echo "<p>Please fill out all fields and select a rating.</p>";
+    }
+}
+
+?>
+
+<section id="reviews">
     <h2>Leave a Review</h2>
-    <form id="review-form">
+    <form id="review-form" method="POST">
+        <input type="hidden" name="action" value="submitReview">
+
         <label for="book-title">Book Title:</label>
-        <input type="text" id="book-title" name="book-title" required>
+        <input type="text" id="book-title" name="title" required>
 
         <label for="review-text">Your Review:</label>
-        <textarea id="review-text" name="review-text" required></textarea>
+        <textarea id="review-text" name="text" required></textarea>
 
-        <!-- Star Rating System -->
         <div class="star-rating">
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
+            <label>
+                <input type="radio" name="score" value="1" required>
+                ★
+            </label>
+            <label>
+                <input type="radio" name="score" value="2">
+                ★★
+            </label>
+            <label>
+                <input type="radio" name="score" value="3">
+                ★★★
+            </label>
+            <label>
+                <input type="radio" name="score" value="4">
+                ★★★★
+            </label>
+            <label>
+                <input type="radio" name="score" value="5">
+                ★★★★★
+            </label>
         </div>
-        <input type="hidden" id="rating" name="rating" value="0"> <!-- Stores rating -->
 
         <button type="submit">Submit Review</button>
     </form>

@@ -287,8 +287,16 @@ function ofUserRatingsAbove($pdo){
     $stmt->closeCursor();
     return $results;
 }
+
+function getHours($pdo){
+    $stmt = $pdo->prepare("SELECT HoursRead FROM User WHERE USERID='USER12345'");
+    $stmt->execute();
+    $restults = $stmt->fetchALL(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $restults;
+}
 function addHours($pdo) {
-    $stmt = $pdo->prepare("CALL AddBooks(:amount)");
+    $stmt = $pdo->prepare("CALL AddHours(:amount)");
     $amount = 1;
     $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
     $stmt->execute();
