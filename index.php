@@ -48,6 +48,7 @@ function incrementStat(id) {
         <div class="carousel" id="carousel-content">
             <!-- Books will be loaded dynamically here -->
             <?php
+<<<<<<< HEAD
             $bookTitle = "Whispers of the Wicked Saints";
             $images = $pdo ? getBookImagesByCategory($pdo, "['Computers']"): [];
 
@@ -56,6 +57,13 @@ function incrementStat(id) {
     echo '<img src="' . htmlspecialchars($image['Image']) . '" alt="' . htmlspecialchars($bookTitle) . '" style="width:200px;height:auto;">';
 }
 
+=======
+            $bookTitle = "Example";
+            $image = getBookImage($pdo, $bookTitle);
+            foreach ($images as $image) {
+            echo '<img src="' . htmlspecialchars($image['image']) . '" alt="' . htmlspecialchars($bookTitle) . '" style="width:200px;height:auto;">';
+            }
+>>>>>>> 270104dbe564f3457547e10f80988d808f8c58ef
             ?>
             
         </div>

@@ -347,7 +347,7 @@ function addBookToWillReadList($pdo, $title){
 }
 function getBookImagesByCategory($pdo, $category) {
     // Prepare the SQL query to select the category and randomize the results
-    $stmt = $pdo->prepare("CALL getBookImagesByCategory(:category)");
+    $stmt = $pdo->prepare("CALL getBookImageByCategory(:category)");
     $stmt->bindParam(':category', $category, PDO::PARAM_STR);
     $stmt->execute();
     
