@@ -44,6 +44,7 @@ function incrementStat(id) {
     <section id="book-carousel">
     <h2>Recommended Books</h2>
     <div class="carousel-container">
+        <button id="prevBtn">❮</button>
         <div class="carousel" id="carousel-content">
             <!-- Books will be loaded dynamically here -->
             <?php
@@ -54,8 +55,11 @@ function incrementStat(id) {
             foreach ($images as $image) {
     echo '<img src="' . htmlspecialchars($image['Image']) . '" alt="' . htmlspecialchars($bookTitle) . '" style="width:200px;height:auto;">';
 }
+
             ?>
+            
         </div>
+        <button id="nextBtn">❯</button>
     </div>
 </section>
 
@@ -67,14 +71,28 @@ function incrementStat(id) {
         <div class="to-be-read-list">
             <h3>Books You've Read</h3>
             <ul id="read-list">
-                <li>Example Book 1</li>
-                <li>Example Book 2</li>
-                <?php $booksYouveRead = $pdo ? getUserBooksReadImages($pdo): [];
-                echo $booksYouveRead;
+                <?php 
+                $booksYouveRead = $pdo ? getUserBooksReadImages($pdo): [];
+
+                foreach ($booksYouveRead as $book){
+                    echo '<img src="' . htmlspecialchars($book) . '" alt="Book cover" style="width:200px;height:auto;">';
+
+                }
                 ?>
                 <!-- More books will be dynamically loaded -->
             </ul>
         </div>
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
+          $title = trim($_POST['title']);
+          if (!empty($title) && $pdo) {
+              addBookToWillReadList($pdo, $title);
+
+              
+           }
+        }
+        ?>
+
 
         <div class="read-list">
         <h3>Your Read List:</h3>
@@ -82,12 +100,22 @@ function incrementStat(id) {
         <input type="text" name="title" placeholder="Enter book title" required>
         <button type="submit">Add Book</button>
         </form>
-    <?php 
-    $pdo = getpdo();
-    $results = $pdo ? getUserBooksReadImages($pdo): [];
-            echo($results);
-            echo 'Result count: ' . count($results);
-    ?>
+
+          <?php
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
+          $title = trim($_POST['title']);
+          if (!empty($title) && $pdo) {
+              removeBookFromWillReadList($pdo, $title);
+           }
+        }
+        ?>
+
+
+        <form method="POST">
+        <input type="text" name="title" placeholder="Enter book title" required>
+        <button type="submit">Remove Book</button>
+        </form>
+
         </div>
     </section>
 
