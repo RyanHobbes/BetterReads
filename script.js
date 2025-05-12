@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const booksReadSpan = document.getElementById("books-read");
     const hoursReadSpan = document.getElementById("hours-read");

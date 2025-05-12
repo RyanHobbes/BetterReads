@@ -44,7 +44,6 @@ function incrementStat(id) {
     <section id="book-carousel">
     <h2>Recommended Books</h2>
     <div class="carousel-container">
-        <button id="prevBtn">❮</button>
         <div class="carousel" id="carousel-content">
             <!-- Books will be loaded dynamically here -->
             <?php
@@ -55,11 +54,8 @@ function incrementStat(id) {
             foreach ($images as $image) {
     echo '<img src="' . htmlspecialchars($image['Image']) . '" alt="' . htmlspecialchars($bookTitle) . '" style="width:200px;height:auto;">';
 }
-
             ?>
-            
         </div>
-        <button id="nextBtn">❯</button>
     </div>
 </section>
 
