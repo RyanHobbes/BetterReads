@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const booksReadSpan = document.getElementById("books-read");
     const hoursReadSpan = document.getElementById("hours-read");
@@ -104,3 +105,18 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error fetching books:", error));
 });
+function incrementStat(id) {
+    const el = document.getElementById(id);
+    let currentValue = parseInt(el.textContent);
+    if (isNaN(currentValue)) currentValue = 0;
+    el.textContent = currentValue + 1;
+}
+
+// Placeholder for server update (AJAX-style)
+function addHours() {
+    // You would normally use fetch() or XMLHttpRequest to send a request to the server
+    // This is where you'd call a PHP handler (e.g., update_hours.php)
+    incrementStat('hours-spent');
+    alert('Hours updated locally — sync with server here!');
+}
+

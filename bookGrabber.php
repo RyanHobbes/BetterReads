@@ -287,8 +287,16 @@ function ofUserRatingsAbove($pdo){
     $stmt->closeCursor();
     return $results;
 }
+
+function getHours($pdo){
+    $stmt = $pdo->prepare("SELECT HoursRead FROM User WHERE USERID='USER12345'");
+    $stmt->execute();
+    $restults = $stmt->fetchALL(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $restults;
+}
 function addHours($pdo) {
-    $stmt = $pdo->prepare("CALL AddBooks(:amount)");
+    $stmt = $pdo->prepare("CALL AddHours(:amount)");
     $amount = 1;
     $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
     $stmt->execute();
@@ -318,23 +326,9 @@ function subBooks($pdo) {
 }
 
 function addBookToReadList($pdo, $title){
-        $userID = "USER12345";
-    $stmt = $pdo->prepare("CALL addToReadList(:userID, :title)");
-    $stmt->bindParam(':userID', PDO::PARAM_STR);
-    $stmt->bindParam(':title', $title, PDO::PARAM_STR);
-
-    try {
-        $stmt->execute();
-        echo "Book added to the read list successfully.";
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-    }
-        $stmt->closeCursor();
-}
-function addBookToWillReadList($pdo, $title){
     $userID = "USER12345";
     $stmt = $pdo->prepare("CALL addToReadList(:userID, :title)");
-    $stmt->bindParam(':userID', PDO::PARAM_STR);
+    $stmt->bindParam(':userID', $userID, PDO::PARAM_STR);
     $stmt->bindParam(':title', $title, PDO::PARAM_STR);
 
     try {
@@ -343,11 +337,29 @@ function addBookToWillReadList($pdo, $title){
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
-        $stmt->closeCursor();
+
+    $stmt->closeCursor();
 }
+
+function addBookToWillReadList($pdo, $title){
+    $userID = "USER12345";
+    $stmt = $pdo->prepare("CALL addToWillReadList(:userID, :title)");
+    $stmt->bindParam(':userID', $userID, PDO::PARAM_STR);
+    $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        echo "Book added to the read list successfully.";
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+
+    $stmt->closeCursor();
+}
+
 function getBookImagesByCategory($pdo, $category) {
     // Prepare the SQL query to select the category and randomize the results
-    $stmt = $pdo->prepare("CALL getBookImageByCategory(:category)");
+    $stmt = $pdo->prepare("CALL getBookImagesByCategory(:category)");
     $stmt->bindParam(':category', $category, PDO::PARAM_STR);
     $stmt->execute();
     
@@ -386,7 +398,6 @@ Example of how to use Leavebookreview
 
 // Example data
 $title = "Dr. Seuss: American Icon";
-$userId = "A2MVUWT453QH61";
 $score = 4.0;
 $text = "Great book on the legacy of Dr. Seuss! Thorough and informative.";
 
@@ -405,6 +416,20 @@ function leaveBookReview($pdo, $title, $score, $text) {
         echo "Error adding review: " . $e->getMessage();
         return false;
     }
+}
+function removeBookFromWillReadList($pdo, $title) {
+    $userID = "USER12345";
+    $stmt = $pdo->prepare("DELETE FROM UserBooksRead WHERE Title = :title");
+    $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        echo "Book removed from the list.";
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+
+    $stmt->closeCursor();
 }
 
 
