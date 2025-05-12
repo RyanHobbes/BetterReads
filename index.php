@@ -1,3 +1,8 @@
+<?php
+require_once 'bookGrabber.php'; // This should contain the getBookImage() function
+// Connect to the database
+$pdo = getpdo();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +47,17 @@ function incrementStat(id) {
         <button id="prevBtn">❮</button>
         <div class="carousel" id="carousel-content">
             <!-- Books will be loaded dynamically here -->
+            <?php
+            $bookTitle = "Whispers of the Wicked Saints";
+            $images = $pdo ? getBookImagesByCategory($pdo, "['Computers']"): [];
+
+            //$images = getBookImage($pdo, $bookTitle);
+            foreach ($images as $image) {
+    echo '<img src="' . htmlspecialchars($image['Image']) . '" alt="' . htmlspecialchars($bookTitle) . '" style="width:200px;height:auto;">';
+}
+
+            ?>
+            
         </div>
         <button id="nextBtn">❯</button>
     </div>
@@ -52,7 +68,7 @@ function incrementStat(id) {
     <section id="book-lists">
         
         <br>
-        <div class="read-list">
+        <div class="to-be-read-list">
             <h3>Books You've Read</h3>
             <ul id="read-list">
                 <li>Example Book 1</li>
@@ -61,15 +77,23 @@ function incrementStat(id) {
             </ul>
         </div>
 
-        <div class="unread-list">
-            <h3>Books You Want to Read</h3>
-            <ul id="want-to-read-list">
-                <li>Example Book 3</li>
-                <li>Example Book 4</li>
-                <!-- More books will be dynamically loaded -->
-            </ul>
+        <div class="read-list">
+        <h3>Your Read List:</h3>
+        <form method="POST">
+        <input type="text" name="title" placeholder="Enter book title" required>
+        <button type="submit">Add Book</button>
+        </form>
+    <?php 
+    $pdo = getpdo();
+    $results = $pdo ? getUserBooksReadImages($pdo): [];
+            echo($results);
+            echo 'Result count: ' . count($results);
+    ?>
         </div>
     </section>
+
+
+
     <section id="friends-list">
         <h2>Your Friends</h2>
         <ul id="friends">

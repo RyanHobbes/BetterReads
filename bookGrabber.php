@@ -347,7 +347,7 @@ function addBookToWillReadList($pdo, $title){
 }
 function getBookImagesByCategory($pdo, $category) {
     // Prepare the SQL query to select the category and randomize the results
-    $stmt = $pdo->prepare("CALL getBookImageByCategory(:category)");
+    $stmt = $pdo->prepare("CALL getBookImagesByCategory(:category)");
     $stmt->bindParam(':category', $category, PDO::PARAM_STR);
     $stmt->execute();
     
@@ -357,6 +357,55 @@ function getBookImagesByCategory($pdo, $category) {
     $stmt->closeCursor();
     return $results;
 }
+function getUserBooksReadImages($pdo) {
+    try {
+        $stmt = $pdo->prepare("CALL getUserBooksReadImages()");
+        $stmt->execute();
+        $images = $stmt->fetchAll(PDO::FETCH_COLUMN); // fetches just the 'Image' values
+        $stmt->closeCursor();
+        return $images;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return [];
+    }
+}
+function getUserBooksWillReadImages($pdo) {
+    try {
+        $stmt = $pdo->prepare("CALL getUserBooksWillReadImages()");
+        $stmt->execute();
+        $images = $stmt->fetchAll(PDO::FETCH_COLUMN); // fetches just the 'Image' values
+        $stmt->closeCursor();
+        return $images;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return [];
+    }
+}
+/*
+Example of how to use Leavebookreview
+
+// Example data
+$title = "Dr. Seuss: American Icon";
+$score = 4.0;
+$text = "Great book on the legacy of Dr. Seuss! Thorough and informative.";
+
+leaveBookReview($pdo, $title, $userId, $score, $text);
+*/
+function leaveBookReview($pdo, $title, $score, $text) {
+    try {
+        $stmt = $pdo->prepare("CALL addBookReview(:title, :score, :text)");
+        $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+        $stmt->bindParam(':score', $score);
+        $stmt->bindParam(':text', $text, PDO::PARAM_STR);
+        $stmt->execute();
+        $stmt->closeCursor();
+        return true;
+    } catch (PDOException $e) {
+        echo "Error adding review: " . $e->getMessage();
+        return false;
+    }
+}
+
 
 
 ?>
